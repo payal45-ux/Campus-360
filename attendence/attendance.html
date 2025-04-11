@@ -1,8 +1,0 @@
-<video id="video" width="720" height="560" autoplay muted></video>
-<script>
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-      document.getElementById('video').srcObject = stream;
-    });
-</script>
-<script defer src="face-api.js"></script>
