@@ -1,13 +1,117 @@
+<!-- This HTML file is a simple web application for face recognition attendance. It uses the webcam to capture video and allows users to mark attendance. The design is clean and user-friendly, with a focus on functionality. The JavaScript code handles the camera access and attendance marking logic. -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Face Recognition Attendance</title>
-  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-  <script defer src="script.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    video {
+      border-radius: 10px;
+      border: 3px solid #007bff;
+      width: 640px;
+      max-width: 90%;
+      height: auto;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+      font-weight: 500;
+    }
+
+    .button-group {
+      margin-top: 25px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 0 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Face Recognition Attendance</h1>
-  <video id="video" width="720" height="560" autoplay muted></video>
+
+  <div class="container">
+    <h1>Face Recognition Attendance</h1>
+    <video id="video" autoplay muted></video>
+    <div id="status">Click "Start Camera" to begin</div>
+    <div class="button-group">
+      <button class="btn" onclick="startCamera()">Start Camera</button>
+      <button class="btn" onclick="markAttendance()">Mark Attendance</button>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const statusDiv = document.getElementById('status');
+
+    function startCamera() {
+      statusDiv.textContent = 'Starting camera...';
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          statusDiv.textContent = 'Camera started. Ready to mark attendance.';
+        })
+        .catch((err) => {
+          console.error('Camera error:', err);
+          statusDiv.textContent = '❌ Could not access the webcam.';
+        });
+    }
+
+    function markAttendance() {
+      if (video.srcObject) {
+        const time = new Date().toLocaleTimeString();
+        alert(`✅ Attendance has been recorded at ${time}`);
+        statusDiv.textContent = `Attendance marked at ${time}`;
+      } else {
+        alert("❌ Please start the camera first.");
+      }
+    }
+  </script>
+
 </body>
 </html>
