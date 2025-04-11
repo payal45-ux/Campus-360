@@ -1,13 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Face Recognition Attendance</title>
-  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-  <script defer src="script.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Face Attendance System</title>
+  <script defer src="https://unpkg.com/face-api.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+    video {
+      border: 2px solid #444;
+      border-radius: 10px;
+    }
+    canvas {
+      position: absolute;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
 </head>
 <body>
   <h1>Face Recognition Attendance</h1>
   <video id="video" width="720" height="560" autoplay muted></video>
+  <div id="status">Loading models...</div>
+
+  <script>
+    const video = document.getElementById('video');
+    const statusDiv = document.getElementById('status');
+
+    // Load face-api.js models from CDN
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models')
+    ])
+    .then(startVideo)
+    .catch(err => {
+      statusDiv.textContent = '❌ Error loading face-api models.';
+      console.error('Model loading error:', err);
+    });
+
+    function startVideo() {
+      navigator.mediaDevices.getUserMedia({ video: {} })
+        .then(stream => {
+          video.srcObject = stream;
+        })
+        .catch(err => {
+          statusDiv.textContent = '❌ Cannot access webcam.';
+          console.error('Webcam error:', err);
+        });
+    }
+
+    // Simulated known face (public image URL)
+    async function loadLabeledImages() {
+      const labels = ['User'];
+      return Promise.all(
+        labels.map(async label => {
+          const descriptions = [];
+          const imgUrl = 'https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/User/1.jpg';
+          const img = await faceapi.fetchImage(imgUrl);
+          const detection = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+          if (!detection) throw new Error(`No face detected for ${label}`);
+          descriptions.push(detection.descriptor);
+          return new faceapi.LabeledFaceDescriptors(label, descriptions);
+        })
+      );
+    }
+
+    video.addEventListener('play', async () => {
+      statusDiv.textContent = '⌛ Loading known faces...';
+      let labeledDescriptors;
+      try {
+        labeledDescriptors = await loadLabeledImages();
+      } catch (e) {
+        statusDiv.textContent = '❌ Failed to load labeled images.';
+        console.error(e);
+        return;
+      }
+
+      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
+      const canvas = faceapi.createCanvasFromMedia(video);
+      document.body.append(canvas);
+      const displaySize = { width: video.width, height: video.height };
+      faceapi.matchDimensions(canvas, displaySize);
+
+      statusDiv.textContent = '✅ Face Recognition Ready!';
+
+      setInterval(async () => {
+        const detections = await faceapi
+          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks()
+          .withFaceDescriptors();
+
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+
+        const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+        results.forEach((result, i) => {
+          const box = resizedDetections[i].detection.box;
+          const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
+          drawBox.draw(canvas);
+
+          if (result.label !== 'unknown') {
+            statusDiv.textContent = `✅ Attendance marked for ${result.label} at ${new Date().toLocaleTimeString()}`;
+          }
+        });
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
