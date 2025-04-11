@@ -8,7 +8,8 @@ aside {
   }
   
   aside a {
-    font-size: 20px;
+    font-size: 15px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #fff;
     display: block;
     padding: 15px;
@@ -18,7 +19,7 @@ aside {
   }
   
   aside a:hover {
-    color: #3f5efb;
+    color: #cca000;
     background: #fff;
     outline: none;
     position: relative;
