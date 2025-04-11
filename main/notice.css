@@ -1,4 +1,12 @@
+body{
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  grid-template-areas: 
+  "sidebar main "
+  "sidebar footer";
+}
 aside {
+  grid-area: sidebar; 
     color: #fff;
     width: 250px;
     padding-left: 20px;
@@ -83,4 +91,8 @@ aside {
     border-radius: 50%;
     top:5px;
     right:5px;
+  }
+
+  main{
+    grid-area: main;
   }

@@ -86,6 +86,6 @@ aside {
   }
 
   .main {
-    float: left;   /* Make it float to the left */
+    margin:left;   /* Make it float to the left */
     /* Add any other styling for the main content here */
   }
