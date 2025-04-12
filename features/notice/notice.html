@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College ERP Notice Board</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Notice Board</h1>
+    </header>
+    <main>
+        <section class="search-bar">
+            <input type="text" id="search" placeholder="Search notices...">
+            <button onclick="searchNotices()">Search</button>
+        </section>
+        <section class="notices">
+            <h2>Latest Notices</h2>
+            <div class="notice" id="notice1">
+                <h3>Notice Title 1</h3>
+                <p>Date: 2023-10-01</p>
+                <p>This is a brief description of the notice. Click to read more.</p>
+                <a href="#">Read More</a>
+            </div>
+            <div class="notice" id="notice2">
+                <h3>Notice Title 2</h3>
+                <p>Date: 2023-10-02</p>
+                <p>This is a brief description of the notice. Click to read more.</p>
+                <a href="#">Read More</a>
+            </div>
+            <div class="notice" id="notice3">
+                <h3>Notice Title 3</h3>
+                <p>Date: 2023-10-03</p>
+                <p>This is a brief description of the notice. Click to read more.</p>
+                <a href="#">Read More</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div>
+           <p> Made with ❤️ by Deep_coders.</p>
+                
+        </div>
+    </footer>
+    <script>
+        function searchNotices() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const notices = document.querySelectorAll('.notice');
+            notices.forEach(notice => {
+                const title = notice.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    notice.style.display = 'block';
+                } else {
+                    notice.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

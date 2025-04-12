@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class Schedule</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      color: #060606;
+      padding: 40px 20px;
+    }
+
+    /* Page Title */
+    .page-title {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: "";
+      width: 120px;
+      height: 4px;
+      background-color: #68b5e4;
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Section Headings */
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #060607;
+      border-left: 6px solid #111112;
+      padding-left: 10px;
+    }
+
+    /* Table Styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background-color: #467bca;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background-color: #f1f9ff;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        display: none;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #cad532;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">📑 Class Schedule</h1>
+
+  <!-- Example for CSE -->
+  <div class="section">
+    <h2>Computer Science Engineering - Section A</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Subject</th>
+          <th>Faculty</th>
+          <th>Room</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Time">9:00 AM</td>
+          <td data-label="Subject">Data Structures</td>
+          <td data-label="Faculty">Dr. Patel</td>
+          <td data-label="Room">CS-201</td>
+        </tr>
+        <tr>
+          <td data-label="Time">10:00 AM</td>
+          <td data-label="Subject">Discrete Math</td>
+          <td data-label="Faculty">Ms. Roy</td>
+          <td data-label="Room">CS-202</td>
+        </tr>
+        <tr>
+          <td data-label="Time">11:15 AM</td>
+          <td data-label="Subject">DBMS</td>
+          <td data-label="Faculty">Mr. Ahmed</td>
+          <td data-label="Room">CS-203</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Copy this format for more branches -->
+  <div class="section">
+    <h2>Electronics & Communication Engineering</h2>
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Subject</th><th>Faculty</th><th>Room</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Time">9:00 AM</td><td data-label="Subject">Analog Circuits</td><td data-label="Faculty">Dr. Meena</td><td data-label="Room">EC-101</td></tr>
+        <tr><td data-label="Time">10:00 AM</td><td data-label="Subject">Signals & Systems</td><td data-label="Faculty">Mr. Khan</td><td data-label="Room">EC-102</td></tr>
+        <tr><td data-label="Time">11:15 AM</td><td data-label="Subject">Digital Electronics</td><td data-label="Faculty">Ms. Sharma</td><td data-label="Room">EC-103</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add more branches like IT, ME, IBM, AI & DS, Civil, EEE below in same structure -->
+
+  <div class="section">
+    <h2>Information Technology</h2>
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Subject</th><th>Faculty</th><th>Room</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Time">9:00 AM</td><td data-label="Subject">Web Dev</td><td data-label="Faculty">Ms. Sneha</td><td data-label="Room">IT-101</td></tr>
+        <tr><td data-label="Time">10:00 AM</td><td data-label="Subject">Networking</td><td data-label="Faculty">Mr. Manoj</td><td data-label="Room">IT-102</td></tr>
+        <tr><td data-label="Time">11:15 AM</td><td data-label="Subject">Cloud Computing</td><td data-label="Faculty">Dr. Ravi</td><td data-label="Room">IT-103</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>AI & Data Science</h2>
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Subject</th><th>Faculty</th><th>Room</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Time">9:00 AM</td><td data-label="Subject">Python</td><td data-label="Faculty">Ms. Tania</td><td data-label="Room">AI-101</td></tr>
+        <tr><td data-label="Time">10:00 AM</td><td data-label="Subject">ML</td><td data-label="Faculty">Dr. Bhargav</td><td data-label="Room">AI-102</td></tr>
+        <tr><td data-label="Time">11:15 AM</td><td data-label="Subject">Statistics</td><td data-label="Faculty">Mr. Dey</td><td data-label="Room">AI-103</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
